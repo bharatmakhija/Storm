@@ -1,3 +1,5 @@
+# Storm Basics
+This is a leisure time project to understand apache storm working and its basics.
 # Installing Maven on ubuntu
 
 Verify java is installed using 
@@ -65,15 +67,86 @@ OS name: "linux", version: "3.13.0-32-generic", arch: "amd64", family: "unix"
 
 
 ```$xslt
- <!-- https://mvnrepository.com/artifact/org.apache.storm/storm-core -->
     <dependency>
         <groupId>org.apache.storm</groupId>
         <artifactId>storm-core</artifactId>
-        <version>1.2.2</version>
-        <scope>provided</scope>
+        <version>1.1.1</version>
+        <scope>compile</scope>
     </dependency>
 ```
 
 [FR]: https://mvnrepository.com/artifact/org.apache.storm
 
 - Any Storm maven dependency can be found [here][FR].
+
+
+# We Also Need Zookeeper
+[D-zookeeper]: http://mirrors.estointernet.in/apache/zookeeper/stable/
+
+- [Download Stable zookeeper][D-zookeeper].
+- Move downloaded tar to opt/
+
+```$xslt
+$ cd opt/
+$ tar -zxf zookeeper-3.4.6.tar.gz
+$ cd zookeeper-3.4.6
+$ mkdir data
+```
+
+- Open configuration file named “conf/zoo.cfg” using the command "vi conf/zoo.cfg" and setting all the following parameters as starting point.
+  
+
+```$xslt
+$ vi conf/zoo.cfg
+tickTime=2000
+dataDir=/path/to/zookeeper/data
+clientPort=2181
+initLimit=5
+syncLimit=2
+```
+
+- start zookeeper server.
+
+```$xslt
+$ bin/zkServer.sh start
+```
+
+It should show a response like this:
+
+```$xslt
+$ JMX enabled by default
+$ Using config: /Users/../zookeeper-3.4.6/bin/../conf/zoo.cfg
+$ Starting zookeeper ... STARTED
+
+```
+
+- Connecting to zookeeper via command line
+
+```$xslt
+ bin/zkCli.sh
+```
+
+Output:
+
+```$xslt
+Connecting to localhost:2181
+................
+................
+................
+Welcome to ZooKeeper!
+................
+................
+WATCHER::
+WatchedEvent state:SyncConnected type: None path:null
+[zk: localhost:2181(CONNECTED) 0]
+```
+
+- Stop zookeeper:
+
+```$xslt
+bin/zkServer.sh stop
+```
+# References
+[L1]: https://www.youtube.com/watch?v=0mIEUibjtzk
+
+- [Apache Storm Example | Edureka][L1]
