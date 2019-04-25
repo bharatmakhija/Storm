@@ -1,5 +1,54 @@
 # Storm Basics
 This is a leisure time project to understand apache storm working and its basics.
+
+# Installing Storm
+
+[D-storm]: http://storm.apache.org/downloads.html
+
+- [Download latest stable version from here][D-storm].
+- move that to /opt folder.
+
+```$xslt
+$ cd opt/
+$ tar -zxf apache-storm-0.9.5.tar.gz
+$ cd apache-storm-0.9.5
+$ mkdir data
+```
+
+- modify configuration to map storm to point to zookeeper:
+
+- conf/storm.yaml
+
+```$xslt
+vi conf/storm.yaml
+storm.zookeeper.servers:
+ - "localhost"
+storm.local.dir: “/path/to/storm/data(any path)”
+nimbus.host: "localhost"
+supervisor.slots.ports:
+ - 6700
+ - 6701
+ - 6702
+ - 6703
+```
+
+- start the "Nimbus".
+```$xslt
+bin/storm nimbus
+```
+
+- start the "Supervisor".
+```$xslt
+bin/storm supervisor
+```
+
+- start the UI.
+```$xslt
+bin/storm ui
+```
+
+- After starting Storm user interface application, type the URL http://localhost:8080 in your favorite browser and you could see Storm cluster information and its running topology.
+
 # Installing Maven on ubuntu
 
 Verify java is installed using 
@@ -75,6 +124,8 @@ OS name: "linux", version: "3.13.0-32-generic", arch: "amd64", family: "unix"
     </dependency>
 ```
 
+- NOTE: Make sure this dependency version is same as the version of storm downloaded previously.
+
 [FR]: https://mvnrepository.com/artifact/org.apache.storm
 
 - Any Storm maven dependency can be found [here][FR].
@@ -148,5 +199,8 @@ bin/zkServer.sh stop
 ```
 # References
 [L1]: https://www.youtube.com/watch?v=0mIEUibjtzk
+[L2]: https://www.tutorialspoint.com/apache_storm/apache_storm_installation.htm
 
 - [Apache Storm Example | Edureka][L1]
+- [Tutorial Point - Apache storm installation][L2]
+
